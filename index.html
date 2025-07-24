@@ -32,7 +32,7 @@
       const prompt = `Topic: ${topic}.\nGive a comprehensive overview of all AI tools, agents, and research related to this topic, including both new and past developments. List and describe the most popular, latest, and viral AI tools, agents, and research. Include both free and paid options. For each, mention main features, pricing (if any), ease of use, and what makes it stand out. Focus on tools and agents that are accessible with free trials or free tiers. Give actionable advice for someone wanting to use AI for this topic. Make the explanation simple and easy to understand for beginners.`;
       document.getElementById('result').innerHTML = '<em>Researching... Please wait.</em>';
       // WARNING: Never expose your API key in public code! For demo only:
-      const apiKey = 'YOUR_GEMINI_API_KEY'; // Replace with your Gemini API key
+      const apiKey = 'AIzaSyAhxe7FYmA1B4gwi6oZ1nRGoaSwCYWrolE'; // User's Gemini API key
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const data = {
         contents: [{ parts: [{ text: prompt }] }]
