@@ -38,21 +38,8 @@
     </form>
     <div id="result"></div>
   </div>
-  <div class="container">
-    <div class="toggle-switch">
-      <input type="checkbox" id="darkModeToggle">
-      <label for="darkModeToggle">Dark Mode</label>
-    </div>
-    <h1>Research Agent</h1>
-    <form id="researchForm">
-      <label for="topic">Enter a topic to research:</label>
-      <input type="text" id="topic" name="topic" placeholder="e.g. AI tools, agents, research..." required>
-      <button type="submit">Research</button>
-    </form>
-    <div id="result"></div>
-  </div>
-  <script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
     // Dark mode toggle
     const darkModeToggle = document.getElementById('darkModeToggle');
     darkModeToggle.addEventListener('change', function() {
