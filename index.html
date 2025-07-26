@@ -13,10 +13,36 @@
     button { background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; }
     button:hover { background: #34495e; }
     #result { margin-top: 24px; background: #eef; padding: 16px; border-radius: 4px; }
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
+    .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: background 0.3s, color 0.3s; }
+    #result { margin-top: 24px; background: #eef; padding: 16px; border-radius: 4px; white-space: pre-line; }
+    .dark-mode body { background: #181a1b; color: #e0e0e0; }
+    .dark-mode .container { background: #23272f; color: #e0e0e0; }
+    .dark-mode input, .dark-mode textarea, .dark-mode button { background: #23272f; color: #e0e0e0; border: 1px solid #444; }
+    .dark-mode #result { background: #222b3a; color: #e0e0e0; }
+    .toggle-switch { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px; }
+    .toggle-switch input { width: auto; margin: 0 8px 0 0; }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="toggle-switch">
+      <input type="checkbox" id="darkModeToggle">
+      <label for="darkModeToggle">Dark Mode</label>
+    </div>
+    <h1>Research Agent</h1>
+    <form id="researchForm">
+      <label for="topic">Enter a topic to research:</label>
+      <input type="text" id="topic" name="topic" placeholder="e.g. AI tools, agents, research..." required>
+      <button type="submit">Research</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  <div class="container">
+    <div class="toggle-switch">
+      <input type="checkbox" id="darkModeToggle">
+      <label for="darkModeToggle">Dark Mode</label>
+    </div>
     <h1>Research Agent</h1>
     <form id="researchForm">
       <label for="topic">Enter a topic to research:</label>
@@ -26,6 +52,16 @@
     <div id="result"></div>
   </div>
   <script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        document.documentElement.classList.add('dark-mode');
+      } else {
+        document.documentElement.classList.remove('dark-mode');
+      }
+    });
     document.getElementById('researchForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const topic = document.getElementById('topic').value;
@@ -46,7 +82,12 @@
         if (response.ok) {
           const result = await response.json();
           const answer = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No answer returned.';
-          document.getElementById('result').innerText = answer;
+          // Render markdown if available
+          if (window.marked) {
+            document.getElementById('result').innerHTML = window.marked.parse(answer);
+          } else {
+            document.getElementById('result').innerText = answer;
+          }
         } else {
           document.getElementById('result').innerText = `Error: ${response.status} - ${await response.text()}`;
         }
